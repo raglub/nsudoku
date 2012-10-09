@@ -1,4 +1,5 @@
-require "nsudoku/version"
+require_relative "nsudoku/version"
+require_relative "nsudoku/checker"
 
 class NSudoku
 
@@ -19,11 +20,11 @@ class NSudoku
         erase_in_vertical_three(index)
      end
 
-      9.times do |row_index|
-        9.times do |column_index|
-          erase_in_vertical_one(row_index, column_index)
-          erase_in_horizontal_one(row_index, column_index)
-          erase_in_block_one(row_index, column_index)
+      9.times do |row|
+        9.times do |column|
+          erase_in_vertical_one(row, column)
+          erase_in_horizontal_one(row, column)
+          erase_in_block_one(row, column)
         end
       end
     end
