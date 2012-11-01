@@ -1,5 +1,7 @@
+# encoding: utf-8
 require_relative "nsudoku/version"
 require_relative "nsudoku/checker"
+require_relative "nsudoku/logic"
 
 class NSudoku
 
