@@ -24,7 +24,17 @@ TABLE_EMPTY = [
   "000000000",
   "000000000"].join
 
+SUDOKU44 = [
+  "1030",
+  "4000",
+  "0140",
+  "3001"].join
+
 describe NSudoku do
+
+  it "should properly resolved game sudoku" do
+    NSudoku.new(SUDOKU44).solution.should eq("1234431221433421")
+  end
 
   it "should properly reverse base namber of table" do
     sudoku = NSudoku.new(TABLE_EMPTY)

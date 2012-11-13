@@ -5,10 +5,24 @@ require_relative "nsudoku/logic"
 
 class NSudoku
 
-  def initialize(data)
-    @revers_table = create_revers_table(data.split(""))
+  def initialize(sudoku)
+    @data = sudoku
+    @sudoku = sudoku
+    @revers_table = create_revers_table(sudoku.split(""))
+    @length = @sudoku.length
+    @width = Math.sqrt(@sudoku.length).to_i
+    @block_width = Math.sqrt(@width).to_i
   end
 
+  # return first correct solution for variable @sudoku
+  def solution
+    @solution = nil
+    data = @sudoku.clone + "0"
+    solver(data, -1, "0")
+    @solution[0, @length] if @solution
+  end
+
+  # return result which match to all solutions of sudoku
   def solve
     revers_table = nil
     while not revers_table == @revers_table
@@ -33,12 +47,25 @@ class NSudoku
     revers_table_to_result
   end
 
-  def show_table_pretty
-     @revers_table.each do |cell|
-       puts cell.inspect
-     end
-  end
 private
+
+  # Recursive solving sudoku game
+  #
+  # solver(data, -1, "0")
+  def solver(data, position, value)
+    return if @solution
+    data[position] = value.to_s
+    return unless NSudoku::Checker.new(data).correct?
+    @solution = data.clone if position == @length - 1
+    if @data[position + 1] == "0"
+      (1..@width).each do |value|
+        solver(data, position + 1, value)
+        data[position + 1] = "0"
+      end
+    else
+      solver(data, position + 1, @data[position + 1])
+    end
+  end
 
   # table = [[[1, 2, 3, 4, 5], [], ..., []],
   #          [[],                  ..., []],

@@ -20,7 +20,7 @@ Or install it yourself as:
 
 Usage class NSudoku for example:
 
-    EXAMPLE = [
+    SUDOKU = [
       "012000000",
       "304052000",
       "605170000",
@@ -34,10 +34,10 @@ Usage class NSudoku for example:
 Solve game the sudoku
 
     > require 'nsudoku'
-    > NSudoku.new(EXAMPLE).solve #=> "712460850394852671685170420070208596926715384050906712540320968269584137030690245"
+    > NSudoku.new(SUDOKU).solve    #=> "712460850394852671685170420070208596926715384050906712540320968269584137030690245"
+    > NSudoku.new(SUDOKU).solution #=> "712463859394852671685179423173248596926715384458936712541327968269584137837691245"
 
 Check whether your array has got that same values in rows, columns or sub blocks. When your array is correct you should expect result nil.
 In other situation you should received array of position with that same value.
 
-    > NSudoku::Checker.new(EXAMPLE).repeat_in #=> nil
-
+    > NSudoku::Checker.new(SUDOKU).repeat_in #=> nil
