@@ -6,7 +6,6 @@ class NSudoku
       @sudoku = sudoku
       @width = Math.sqrt(@sudoku.length).to_i
       @block_width = Math.sqrt(@width).to_i
-     # puts @block_width
     end
 
     def correct?
