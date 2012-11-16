@@ -12,6 +12,7 @@ class NSudoku
       @revers = create_revers(@sudoku.split(""))
     end
 
+    # search result of sudoku
     def search
       revers = nil
       while not revers == @revers
@@ -38,7 +39,7 @@ class NSudoku
       end
     end
 
-    # revers table @revers_table into string where cell [n] return n and [a1, a2, ..., ak] return 0
+    # revers table @revers into string where cell [n] return n and [a1, a2, ..., ak] return 0
     def sudoku
       result = ""
       @revers.flatten(1).each do |element|
@@ -102,12 +103,17 @@ class NSudoku
 
     def only_two_positions(vector)
       result = {}
-      only_two_positions = positions_values(vector).select {|k,v| v.length == 2}
-      only_two_positions.each { |value, positions| (result[positions] ||= []) << value }
+      positions_values(vector).select do |value, positions|
+        positions.length == 2
+      end.each do |value, positions|
+        (result[positions] ||= []) << value
+      end
       result
     end
 
-    # erase values in vertical, horizontal and block, which are that same like value from positnio row, column
+    # if vector (row, column or block) has got two cells like this [n1, n2, n3] and [n1, n2, n4]
+    # and variables n1, n2 don't exist in other cells of vector than two cells should be equal [n1, n2].
+    # [[1, 4], [2, 4, 1, 3], [1, 2, 4], [4]] #=> [[1, 4], [2, 4], [2, 4], [4]]
     def search_pair(type, index)
       vec = get_vector(type, index)
       only_two_positions(vec).each do |positions, value|
@@ -118,7 +124,9 @@ class NSudoku
       set_vector(type, index, vec)
     end
 
-    # erase values in row, column and block which are that same like value from positnio row, column
+    # if vector (row, column or block) has got cell like this [n1, n2, ..., nk]
+    # and variable ni exist only one in all vector than cell should be equal [ni].
+    # [[1, 2, 3, 4], [2, 4], [1, 2, 4], [1, 4]] #=> [[3], [2, 4], [1, 2, 4], [1, 4]]
     def only_one(type, index)
       vec = get_vector(type, index)
       vec.each_with_index do |values, position|
@@ -131,7 +139,9 @@ class NSudoku
       set_vector(type, index, vec)
     end
 
-    # erase values in vertical, which are that same like value from positnio row, column
+    # if vector (row, column or block) has got cell like this [n1]
+    # than should be erase value n1 from rest of cells.
+    # [[1, 2, 3, 4], [2], [1, 2, 4], [1, 4]] #=> [[1, 3, 4], [2], [1, 4], [1, 4]]
     def search_single(type, index)
       vec = get_vector(type, index)
       positions_values(vec).each do |value, positions|
@@ -139,8 +149,6 @@ class NSudoku
       end
       set_vector(type, index, vec)
     end
-
-  private
 
     # @width = 4
     # cell = [1, 2, 3, 4]

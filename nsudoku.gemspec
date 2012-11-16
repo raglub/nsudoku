@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.platform      = Gem::Platform::RUBY
   gem.authors       = ["Michał Szyma"]
   gem.email         = ["raglub.ruby@gmail.com"]
-  gem.date          = "2012-11-15"
+  gem.date          = "2012-11-16"
   gem.description   = %q{This gem solve puzzle game sudoku (n^2, n^2), for example (3^2, 3^2) = (9, 9)}
   gem.summary       = %q{This gem solve puzzle game sudoku}
   gem.homepage      = "http://github.com/raglub/nsudoku"
